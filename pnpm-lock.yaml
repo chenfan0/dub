@@ -30,8 +30,6 @@ importers:
         specifier: ^1.12.3
         version: 1.12.3
 
-  apps/docs: {}
-
   apps/web:
     dependencies:
       '@boxyhq/saml-jackson':
@@ -3560,6 +3558,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -3569,6 +3568,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -3578,6 +3578,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -3587,6 +3588,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -3596,6 +3598,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -3605,6 +3608,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -3614,6 +3618,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -3623,6 +3628,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -3632,6 +3638,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -3641,6 +3648,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: true
     optional: true
@@ -3650,6 +3658,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -3659,6 +3668,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -3668,6 +3678,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -3677,6 +3688,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: true
     optional: true
@@ -3686,6 +3698,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -3695,6 +3708,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -6516,6 +6530,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -6525,6 +6540,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -6534,6 +6550,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -6543,6 +6560,7 @@ packages:
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -12938,7 +12956,7 @@ packages:
         optional: true
     dependencies:
       prettier: 3.2.5
-      prettier-plugin-organize-imports: 3.2.4(prettier@3.2.5)(typescript@5.1.6)
+      prettier-plugin-organize-imports: 3.2.4(prettier@3.2.5)(typescript@5.2.2)
     dev: true
 
   /prettier@3.2.5:

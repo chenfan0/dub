@@ -74,24 +74,24 @@ export const POST = withSession(async ({ req, session }) => {
     }
   }
 
-  const freeProjects = await prisma.project.count({
-    where: {
-      plan: "free",
-      users: {
-        some: {
-          userId: session.user.id,
-          role: "owner",
-        },
-      },
-    },
-  });
+  // const freeProjects = await prisma.project.count({
+  //   where: {
+  //     plan: "free",
+  //     users: {
+  //       some: {
+  //         userId: session.user.id,
+  //         role: "owner",
+  //       },
+  //     },
+  //   },
+  // });
 
-  if (freeProjects >= FREE_PROJECTS_LIMIT) {
-    return new Response(
-      `You can only create up to ${FREE_PROJECTS_LIMIT} free projects. Additional projects require a paid plan.`,
-      { status: 403 },
-    );
-  }
+  // if (freeProjects >= FREE_PROJECTS_LIMIT) {
+  //   return new Response(
+  //     `You can only create up to ${FREE_PROJECTS_LIMIT} free projects. Additional projects require a paid plan.`,
+  //     { status: 403 },
+  //   );
+  // }
 
   const [slugExist, domainExist] = await Promise.all([
     prisma.project.findUnique({
@@ -134,6 +134,13 @@ export const POST = withSession(async ({ req, session }) => {
         }),
         billingCycleStart: new Date().getDate(),
         inviteCode: nanoid(24),
+        
+        plan: 'business',
+        usersLimit: 999999,
+        linksLimit: 999999,
+        domainsLimit: 999999,
+        usageLimit: 999999,
+        tagsLimit: 999999
       },
       include: {
         domains: true,
