@@ -183,7 +183,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     signIn: async ({ user, account, profile }) => {
       console.log({ user, account, profile });
-      if (!user.email || (await isBlacklistedEmail(user.email))) {
+      if (!user.email || (await isBlacklistedEmail(user.email)) || !user.email.endsWith('@xmind.org')) {
         return false;
       }
       if (account?.provider === "google") {

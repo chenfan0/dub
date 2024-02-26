@@ -41,7 +41,7 @@ export default function LoginForm() {
           disabled={clickedEmail || clickedSSO}
           icon={<Google className="h-5 w-5" />}
         />
-        <Button
+        {/* <Button
           variant="secondary"
           onClick={() => {
             setClickedGithub(true);
@@ -52,9 +52,9 @@ export default function LoginForm() {
           loading={clickedGitub}
           disabled={clickedEmail || clickedSSO}
           icon={<Github className="h-5 w-5 text-black" />}
-        />
+        /> */}
       </div>
-      <form
+      {/* <form
         onSubmit={async (e) => {
           e.preventDefault();
           setClickedEmail(true);
@@ -126,8 +126,8 @@ export default function LoginForm() {
           loading={clickedEmail}
           disabled={clickedGoogle || clickedSSO}
         />
-      </form>
-      <form
+      </form> */}
+      {/* <form
         onSubmit={async (e) => {
           e.preventDefault();
           setClickedSSO(true);
@@ -186,8 +186,8 @@ export default function LoginForm() {
           loading={clickedSSO}
           disabled={clickedGoogle || clickedEmail}
         />
-      </form>
-      {noSuchAccount ? (
+      </form> */}
+      {/* {noSuchAccount ? (
         <p className="text-center text-sm text-red-500">
           No such account.{" "}
           <Link href="/register" className="font-semibold text-red-600">
@@ -205,7 +205,7 @@ export default function LoginForm() {
             Sign up
           </Link>
         </p>
-      )}
+      )} */}
     </>
   );
 }
