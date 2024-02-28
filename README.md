@@ -1,6 +1,6 @@
-<a href="https://dub.co">
+<a href="https://spmd.io">
   <img alt="Dub – an open-source link management tool for modern marketing teams to create, share, and track short links." src="https://github.com/dubinc/dub/assets/28986134/8f70a87f-4f13-426a-9785-a47f77433edd">
-  <h1 align="center">Dub</h1>
+  <h1 align="center">Xmind Dub</h1>
 </a>
 
 <p align="center">
