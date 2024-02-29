@@ -1,0 +1,11 @@
+default:
+  image: node:18.17.0-alpine3.18
+
+deploy_production:
+  stage: deploy
+  only:
+    - main
+  script:
+    - npm install pnpm -g
+    - npm install vercel -g
+    - vercel deploy --prod --token=$VERCEL_TOKEN
