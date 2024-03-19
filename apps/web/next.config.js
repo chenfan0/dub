@@ -103,10 +103,10 @@ module.exports = {
         has: [
           {
             type: 'host',
-            value: 'www.spmd.io',
+            value: 'www.xmind.im',
           }
         ],
-        destination: 'https://app.spmd.io',
+        destination: 'https://www.xmind.app',
         permanent: true,
       },
       // {
