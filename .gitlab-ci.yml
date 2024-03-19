@@ -9,3 +9,12 @@ deploy_production:
     - npm install pnpm -g
     - npm install vercel -g
     - vercel deploy --prod --token=$VERCEL_TOKEN
+
+deploy_beta:
+  stage: deploy
+  only:
+    - beta
+  script:
+    - npm install pnpm -g
+    - npm install vercel -g
+    - vercel deploy --token=$VERCEL_TOKEN
