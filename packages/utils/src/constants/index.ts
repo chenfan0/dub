@@ -17,7 +17,7 @@ export const SHORT_DOMAIN =
 export const HOME_DOMAIN = `https://${process.env.NEXT_PUBLIC_APP_DOMAIN}`;
 
 export const APP_HOSTNAMES = new Set([
-  `in.${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
+  `${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
   `preview.${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
   "localhost:8888",
   "localhost",
@@ -25,14 +25,14 @@ export const APP_HOSTNAMES = new Set([
 
 export const APP_DOMAIN =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-    ? `https://in.${process.env.NEXT_PUBLIC_APP_DOMAIN}`
+    ? `https://${process.env.NEXT_PUBLIC_APP_DOMAIN}`
     : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
       ? `https://preview.${process.env.NEXT_PUBLIC_APP_DOMAIN}`
       : "http://localhost:8888";
 
 export const APP_DOMAIN_WITH_NGROK =
   process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
-    ? `https://in.${process.env.NEXT_PUBLIC_APP_DOMAIN}`
+    ? `https://${process.env.NEXT_PUBLIC_APP_DOMAIN}`
     : process.env.NEXT_PUBLIC_VERCEL_ENV === "preview"
       ? `https://preview.${process.env.NEXT_PUBLIC_APP_DOMAIN}`
       : process.env.NGROK_URL || "http://localhost:8888";
