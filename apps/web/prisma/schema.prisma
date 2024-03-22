@@ -111,7 +111,7 @@ model Project {
   updatedAt DateTime @updatedAt
 
   inviteCode  String? @unique
-  metadata    Json?    @default("{\"defaultDomains\":[\"spmd.io\"]}")
+  metadata    Json?    @default("{\"defaultDomains\":[\"xmd.im\", \"xmd.ing\"]}")
 }
 
 model ProjectInvite {
