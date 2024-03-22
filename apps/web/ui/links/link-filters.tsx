@@ -183,24 +183,19 @@ const DomainsFilter = () => {
   const searchParams = useSearchParams();
   const { queryParams } = useRouterStuff();
   const { data: domains } = useLinksCount({ groupBy: "domain" });
-  const { primaryDomain } = useDomains();
+  const { allActiveDomains } = useDomains();
 
   const [collapsed, setCollapsed] = useState(false);
   const [showMore, setShowMore] = useState(false);
 
   const options = useMemo(() => {
-    return domains?.length === 0
-      ? [
-          {
-            value: primaryDomain,
-            count: 0,
-          },
-        ]
-      : domains?.map(({ domain, _count }) => ({
-          value: domain,
-          count: _count,
-        })) || [];
-  }, [domains, primaryDomain]);
+    return allActiveDomains
+      .map((domain) => ({
+        ...domain,
+        count: domains?.find(({ domain: d }) => d === domain.slug)?._count || 0,
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [allActiveDomains, domains]);
 
   return (
     <fieldset className="overflow-hidden py-6">
@@ -225,22 +220,19 @@ const DomainsFilter = () => {
           >
             {options
               .slice(0, showMore ? options.length : 4)
-              .map(({ value, count }) => (
+              .map((domain) => (
                 <div
-                  key={value}
+                  key={domain.slug}
                   className="relative flex cursor-pointer items-center space-x-3 rounded-md bg-gray-50 transition-all hover:bg-gray-100"
                 >
                   <input
-                    id={value}
-                    name={value}
-                    checked={
-                      searchParams?.get("domain") === value ||
-                      domains?.length <= 1
-                    }
+                    id={domain.slug}
+                    name={domain.slug}
+                    checked={searchParams?.get("domain") === domain.slug}
                     onChange={() => {
                       queryParams({
                         set: {
-                          domain: value,
+                          domain: domain.slug,
                         },
                         del: "page",
                       });
@@ -249,12 +241,12 @@ const DomainsFilter = () => {
                     className="ml-3 h-4 w-4 cursor-pointer rounded-full border-gray-300 text-black focus:outline-none focus:ring-0"
                   />
                   <label
-                    htmlFor={value}
+                    htmlFor={domain.slug}
                     className="flex w-full cursor-pointer justify-between px-3 py-2 pl-0 text-sm font-medium text-gray-700"
                   >
-                    <p>{truncate(punycode.toUnicode(value || ""), 24)}</p>
-                    <NumberTooltip value={count} unit="links">
-                      <p className="text-gray-500">{nFormatter(count)}</p>
+                    <p>{truncate(punycode.toUnicode(domain.slug || ""), 24)}</p>
+                    <NumberTooltip value={domain.count} unit="links">
+                      <p className="text-gray-500">{nFormatter(domain.count)}</p>
                     </NumberTooltip>
                   </label>
                 </div>

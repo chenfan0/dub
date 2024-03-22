@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { formatRedisLink, redis } from "@/lib/upstash";
 import {
   DEFAULT_REDIRECTS,
+  DEFAULT_XMIND_DOMAINS,
   DUB_DOMAINS,
   SHORT_DOMAIN,
   getDomainWithoutWWW,
@@ -281,7 +282,7 @@ export async function processLink({
   }
 
   // checks for default short domain
-  if (domain === SHORT_DOMAIN) {
+  if (DEFAULT_XMIND_DOMAINS.includes(domain)) {
     const keyBlacklisted = await isBlacklistedKey(key);
     if (keyBlacklisted) {
       return {

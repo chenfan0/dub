@@ -11,8 +11,10 @@ export * from "./saml";
 
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Dub.co";
 
+export const DEFAULT_XMIND_DOMAINS = ['xmd.im', 'xmd.ing', 'spmd.io'];
+
 export const SHORT_DOMAIN =
-  process.env.NEXT_PUBLIC_APP_SHORT_DOMAIN || "dub.sh";
+  process.env.NEXT_PUBLIC_APP_SHORT_DOMAIN || "xmd.im";
 
 export const HOME_DOMAIN = `https://${process.env.NEXT_PUBLIC_APP_DOMAIN}`;
 
@@ -67,9 +69,23 @@ export const LEGAL_USER_ID = "clqei1lgc0000vsnzi01pbf47";
 export const DUB_DOMAINS = [
   {
     id: "clce1z7ch00j0rbstbjufva4j",
-    slug: SHORT_DOMAIN,
+    slug: 'xmd.im',
     verified: true,
     primary: true,
+    archived: false,
+    publicStats: false,
+    target: `https://${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
+    type: "redirect",
+    placeholder: "https://dub.co/help/article/what-is-dub1",
+    clicks: 0,
+    allowedHostnames: [],
+    projectId: DUB_PROJECT_ID,
+  },
+  {
+    id: "clce1z7ch00j0rbstbjufva4v",
+    slug: 'xmd.ing',
+    verified: true,
+    primary: false,
     archived: false,
     publicStats: false,
     target: `https://${process.env.NEXT_PUBLIC_APP_DOMAIN}`,
