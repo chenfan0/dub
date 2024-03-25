@@ -24,8 +24,8 @@ export default function useDomains({ domain }: { domain?: string } = {}) {
   const { defaultDomains: projectDefaultDomains } = useProject();
 
   const defaultDomains =
-    (projectDefaultDomains &&
-      DUB_DOMAINS.filter((d) => projectDefaultDomains?.includes(d.slug))) ||
+    // (projectDefaultDomains &&
+    //   DUB_DOMAINS.filter((d) => projectDefaultDomains?.includes(d.slug))) ||
     DUB_DOMAINS;
 
   const allDomains = [
@@ -34,7 +34,7 @@ export default function useDomains({ domain }: { domain?: string } = {}) {
   ];
   const allActiveDomains = [
     ...(projectDomains || []),
-    ...(slug !== "dub" ? defaultDomains : []),
+    ...(slug !== "default-domain" ? defaultDomains : []),
   ];
 
   const primaryDomain =

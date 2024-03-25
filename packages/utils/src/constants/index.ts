@@ -11,8 +11,6 @@ export * from "./saml";
 
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Dub.co";
 
-export const DEFAULT_XMIND_DOMAINS = ['xmd.im', 'xmd.ing'];
-
 export const SHORT_DOMAIN =
   process.env.NEXT_PUBLIC_APP_SHORT_DOMAIN || "xmd.im";
 
@@ -83,7 +81,7 @@ export const DUB_DOMAINS = [
   },
   {
     id: "clce1z7ch00j0rbstbjufva4v",
-    slug: 'xmd.ing',
+    slug: 'spmd.io',
     verified: true,
     primary: false,
     archived: false,
@@ -147,3 +145,5 @@ export const DUB_DOMAINS = [
       ]
     : []),
 ];
+
+export const DEFAULT_XMIND_DOMAINS = DUB_DOMAINS.map(d => d.slug);

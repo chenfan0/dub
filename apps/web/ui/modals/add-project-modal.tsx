@@ -82,14 +82,14 @@ function AddProjectModalHelper({
 
   const searchParams = useSearchParams();
   const { queryParams } = useRouterStuff();
-  const [useDefaultDomain, setUseDefaultDomain] = useState<boolean>(false);
-  useEffect(() => {
-    if (searchParams.has("useDefaultDomain")) {
-      setUseDefaultDomain(true);
-    } else {
-      setUseDefaultDomain(false);
-    }
-  }, [searchParams]);
+  const [useDefaultDomain, setUseDefaultDomain] = useState<boolean>(true);
+  // useEffect(() => {
+  //   if (searchParams.has("useDefaultDomain")) {
+  //     setUseDefaultDomain(true);
+  //   } else {
+  //     setUseDefaultDomain(false);
+  //   }
+  // }, [searchParams]);
 
   const { isMobile } = useMediaQuery();
 
