@@ -40,6 +40,7 @@ export async function recordClick({
   url?: string;
   root?: boolean;
 }) {
+  console.log("recordClick", id, url, root);
   const isBot = detectBot(req);
   if (isBot) {
     return null;
