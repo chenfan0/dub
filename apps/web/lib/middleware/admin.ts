@@ -4,6 +4,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequest, NextResponse } from "next/server";
 import { conn } from "../planetscale";
 import { UserProps } from "../types";
+import prisma from "../prisma";
 
 export default async function AdminMiddleware(req: NextRequest) {
   const { path } = parse(req);
@@ -18,12 +19,19 @@ export default async function AdminMiddleware(req: NextRequest) {
     user?: UserProps;
   };
 
-  const response = await conn
-    .execute("SELECT projectId FROM ProjectUsers WHERE userId = ?", [
-      session?.user?.id,
-    ])
-    .then((res) => res.rows[0] as { projectId: string } | undefined);
 
+  let response 
+  if (session?.user?.id) {
+    response = await prisma.projectUsers.findMany({
+      where: {
+        userId: session?.user?.id,
+      },
+      select: {
+        projectId: true,
+      },
+    })
+    response = response[0] as { projectId: string } | undefined
+  }
   if (response?.projectId === DUB_PROJECT_ID) {
     isAdmin = true;
   }

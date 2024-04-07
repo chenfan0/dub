@@ -1,4 +1,5 @@
 import { conn } from "./planetscale";
+import prisma from "./prisma";
 
 export type IntervalProps = "1h" | "24h" | "7d" | "30d" | "90d" | "all";
 
@@ -117,19 +118,27 @@ export const getAnalytics = async ({
   // 1. endpoint is /clicks
   // 2. interval is not defined
   if (endpoint === "clicks" && !interval && linkId) {
-    let response = await conn.execute(
-      "SELECT clicks FROM Link WHERE `id` = ?",
-      [linkId],
-    );
-    if (response.rows.length === 0) {
-      response = await conn.execute(
-        "SELECT clicks FROM Domain WHERE `id` = ?",
-        [linkId],
-      );
-      if (response.rows.length === 0) {
+    let response = await prisma.link.findUnique({
+      where: {
+        id: linkId,
+      },
+      select: {
+        clicks: true,
+      },
+    })
+    if (response === null) {
+      response = await prisma.domain.findUnique({
+        where: {
+          id: linkId,
+        },
+        select: {
+          clicks: true,
+        },
+      });
+      if (response === null) {
         return "0";
       }
-      return response.rows[0]["clicks"];
+      return response.clicks.toString();
     }
   }
 

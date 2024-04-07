@@ -3,6 +3,8 @@ import { conn } from "@/lib/planetscale";
 import { ratelimit } from "@/lib/upstash";
 import { LOCALHOST_IP } from "@dub/utils";
 import { ipAddress } from "@vercel/edge";
+
+import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -26,9 +28,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ exists: true });
   }
 
-  const user = await conn
-    .execute("SELECT email FROM User WHERE email = ?", [email])
-    .then((res) => res.rows[0]);
+  const user = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+    select: {
+      email: true, 
+    }
+  });
+  
 
   if (user) {
     return NextResponse.json({ exists: true });

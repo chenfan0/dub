@@ -11,7 +11,21 @@ import { detectBot } from "./middleware/utils";
 import { conn } from "./planetscale";
 import { LinkProps } from "./types";
 import { ratelimit } from "./upstash";
+import prisma from "./prisma";
 
+async function incrementProjectUsageByLinkId(id: string) {
+  const link = await prisma.link.findUnique({
+    where: { id: id },
+    select: { projectId: true } 
+  });
+
+  if (link && link.projectId) {
+    await prisma.project.update({
+      where: { id: link.projectId },
+      data: { usage: { increment: 1 } } 
+    });
+  }
+}
 /**
  * Recording clicks with geo, ua, referer and timestamp data
  **/
@@ -87,19 +101,43 @@ export async function recordClick({
     // also increment the usage count for the project (if it's a link click)
     // and then we have a cron that will reset it at the start of new billing cycle
     root
-      ? conn.execute(
-          "UPDATE Domain SET clicks = clicks + 1, lastClicked = NOW() WHERE id = ?",
-          [id],
-        )
+      ? 
+      // conn.execute(
+      //     "UPDATE Domain SET clicks = clicks + 1, lastClicked = NOW() WHERE id = ?",
+      //     [id],
+      //   )
+        prisma.domain.update({
+          where: {
+            id: id,
+          },
+          data: {
+            clicks: {
+              increment: 1,
+            },
+            lastClicked: new Date(),
+          },
+        })
       : [
-          conn.execute(
-            "UPDATE Link SET clicks = clicks + 1, lastClicked = NOW() WHERE id = ?",
-            [id],
-          ),
-          conn.execute(
-            "UPDATE Project p JOIN Link l ON p.id = l.projectId SET p.usage = p.usage + 1 WHERE l.id = ?",
-            [id],
-          ),
+          // conn.execute(
+          //   "UPDATE Link SET clicks = clicks + 1, lastClicked = NOW() WHERE id = ?",
+          //   [id],
+          // ),
+          prisma.link.update({
+            where: {
+              id: id,
+            },
+            data: {
+              clicks: {
+                increment: 1,
+              },
+              lastClicked: new Date(),
+            },
+          }),
+          incrementProjectUsageByLinkId(id),
+          // conn.execute(
+          //   "UPDATE Project p JOIN Link l ON p.id = l.projectId SET p.usage = p.usage + 1 WHERE l.id = ?",
+          //   [id],
+          // ),
         ],
   ]);
 }
