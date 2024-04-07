@@ -1,5 +1,6 @@
-import { connect } from "@planetscale/database";
 import { DomainProps, ProjectProps } from "./types";
+import mysql from 'mysql2/promise'
+
 
 import prisma from "@/lib/prisma";
 
@@ -7,44 +8,52 @@ export const pscale_config = {
   url: process.env.DATABASE_URL,
 };
 
-export const conn = connect(pscale_config);
+let conn!: mysql.Connection
+
+export async function getConn() {
+  if (conn) return conn
+  conn = await mysql.createConnection(process.env.DATABASE_URL as string)
+  return conn
+}
+
 
 export const getProjectViaEdge = async (projectId: string) => {
   if (!process.env.DATABASE_URL) return null;
 
-  const project = await prisma.project.findUnique({
-    where: {
-      id: projectId
-    }
-  });
-  return project || null;
+  const conn = await getConn()
+  const [rows] =
+    (await conn.execute("SELECT * FROM Project WHERE id = ?", [projectId])) ||
+    {};
+
+  return rows && Array.isArray(rows) && rows.length > 0
+    ? (rows[0] as ProjectProps)
+    : null;
 };
 
 export const getDomainViaEdge = async (domain: string) => {
   if (!process.env.DATABASE_URL) return null;
 
-  const domains = await prisma.domain.findMany({
-    where: {
-      slug: domain
-    }
-  });
-  return domains && domains.length > 0
-    ? (domains[0] as DomainProps)
+  const conn = await getConn()
+  const [rows] =
+    (await conn.execute("SELECT * FROM Domain WHERE slug = ?", [domain])) || {};
+
+  return rows && Array.isArray(rows) && rows.length > 0
+    ? (rows[0] as DomainProps)
     : null;
 };
 
 export const getLinkViaEdge = async (domain: string, key: string) => {
   if (!process.env.DATABASE_URL) return null;
 
-  const links = await prisma.link.findMany({
-    where: {
-      domain,
-      key: decodeURIComponent(key)
-    }
-  })
+  const conn = await getConn()
 
-  return links  && links.length > 0
-    ? (links[0] as unknown as {
+  const [rows] =
+    (await conn.execute(
+      "SELECT * FROM Link WHERE domain = ? AND `key` = ?",
+      [domain, decodeURIComponent(key)], // we need to make sure that the key is always decoded (cause that's how we store it in MySQL)
+    )) || {};
+  return rows && Array.isArray(rows) && rows.length > 0
+    ? (rows[0] as {
         id: string;
         domain: string;
         key: string;

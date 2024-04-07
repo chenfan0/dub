@@ -1,5 +1,5 @@
 import { isWhitelistedEmail } from "@/lib/edge-config";
-import { conn } from "@/lib/planetscale";
+import { getConn } from "@/lib/planetscale";
 import { ratelimit } from "@/lib/upstash";
 import { LOCALHOST_IP } from "@dub/utils";
 import { ipAddress } from "@vercel/edge";
@@ -28,15 +28,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ exists: true });
   }
 
-  const user = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-    select: {
-      email: true, 
-    }
-  });
-  
+  const conn = await getConn();
+  const user = await conn
+    .execute("SELECT email FROM User WHERE email = ?", [email])
+    .then(([rows]) => rows[0]);
 
   if (user) {
     return NextResponse.json({ exists: true });

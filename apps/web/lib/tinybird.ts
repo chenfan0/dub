@@ -8,7 +8,7 @@ import {
 import { ipAddress } from "@vercel/edge";
 import { NextRequest, userAgent } from "next/server";
 import { detectBot } from "./middleware/utils";
-import { conn } from "./planetscale";
+import { getConn } from "./planetscale";
 import { LinkProps } from "./types";
 import { ratelimit } from "./upstash";
 import prisma from "./prisma";
@@ -58,6 +58,7 @@ export async function recordClick({
       return null;
     }
   }
+  const conn = await getConn();
 
   return await Promise.allSettled([
     fetch(
