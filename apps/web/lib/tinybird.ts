@@ -11,7 +11,6 @@ import { detectBot } from "./middleware/utils";
 import { LinkProps } from "./types";
 import { ratelimit } from "./upstash";
 // import prisma from "./prisma";
-import mysql from "mysql2/promise";
 
 // async function incrementProjectUsageByLinkId(id: string) {
 //   const link = await prisma.link.findUnique({
@@ -58,6 +57,7 @@ export async function recordClick({
       return null;
     }
   }
+  const mysql = (await import("mysql2/promise")).default
   const conn = await mysql.createConnection(process.env.DATABASE_URL as string)
 
   const res = await Promise.allSettled([
