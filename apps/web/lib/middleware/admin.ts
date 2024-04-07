@@ -19,7 +19,6 @@ export default async function AdminMiddleware(req: NextRequest) {
     user?: UserProps;
   };
 
-
   let response 
   if (session?.user?.id) {
     response = await prisma.projectUsers.findMany({
@@ -32,6 +31,8 @@ export default async function AdminMiddleware(req: NextRequest) {
     })
     response = response[0] as { projectId: string } | undefined
   }
+
+  
   if (response?.projectId === DUB_PROJECT_ID) {
     isAdmin = true;
   }

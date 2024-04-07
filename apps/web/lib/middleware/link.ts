@@ -125,6 +125,8 @@ export default async function LinkMiddleware(
   }
 
   const searchParams = req.nextUrl.searchParams;
+  console.log('req.headers.get("dub-no-track")', req.headers.get("dub-no-track"))
+  console.log('searchParams.get("dub-no-track")', searchParams.get("dub-no-track"))
   // only track the click when there is no `dub-no-track` header or query param
   if (
     !(

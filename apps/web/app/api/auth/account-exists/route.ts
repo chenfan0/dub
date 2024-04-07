@@ -36,7 +36,6 @@ export async function POST(req: NextRequest) {
       email: true, 
     }
   });
-  
 
   if (user) {
     return NextResponse.json({ exists: true });

@@ -1,4 +1,6 @@
 import { DomainProps, ProjectProps } from "./types";
+// import mysql from 'mysql2/promise'
+
 
 import prisma from "@/lib/prisma";
 
