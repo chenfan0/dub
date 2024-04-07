@@ -1,4 +1,3 @@
-import { connect } from "@planetscale/database";
 import { DomainProps, ProjectProps } from "./types";
 
 import prisma from "@/lib/prisma";
@@ -7,7 +6,7 @@ export const pscale_config = {
   url: process.env.DATABASE_URL,
 };
 
-export const conn = connect(pscale_config);
+// export const conn = connect(pscale_config);
 
 export const getProjectViaEdge = async (projectId: string) => {
   if (!process.env.DATABASE_URL) return null;
